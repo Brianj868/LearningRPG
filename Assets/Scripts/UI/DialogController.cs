@@ -1,6 +1,8 @@
 using Ink.Runtime;
+using System;
 using System.Text;
 using TMPro;
+using UnityEditor.MPE;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -53,13 +55,11 @@ public class DialogController : MonoBehaviour
         foreach (var tag in _story.currentTags)
         {
             Debug.Log(tag);
-            if (tag == "OpenDoor")
-                OpenDoor();
+            if (tag.StartsWith("E."))
+            {
+                string eventName = tag.Remove(0, 2);
+                GameEvent.RaiseEvent(eventName);
+            }
         }
-    }
-
-    private void OpenDoor()
-    {
-        _animator.SetTrigger("Open");
     }
 }
